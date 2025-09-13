@@ -1,15 +1,46 @@
 <!doctype html>
-<html lang="es">
+<html lang="">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ✅ Nuevo título -->
+    <!-- SEO Meta Tags -->
     <title>Soluciones Tecnológicas para Empresas | Softdev Nexus</title>
-
-    <!-- ✅ Nueva descripción -->
     <meta name="description" content="En Softdev Nexus, ofrecemos creación de páginas web y soluciones tecnológicas para empresas que optimizan su rendimiento y crecimiento." />
+    <meta name="keywords" content="desarrollo web, paginas web, sistemas web, react, node, desarrollo de software, ecommerce, marketing digital, seo, softdev nexus, softdev, nexus" />
+    <meta name="author" content="Softdev Nexus" />
+
+    <!-- Pistas de recursos para optimización de carga -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <!-- Script para Carga Asíncrona del CSS Principal -->
+    <script>
+      // Este script encuentra la hoja de estilos principal inyectada por Vite y la carga de forma asíncrona
+      // para evitar el bloqueo del renderizado.
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const node of mutation.addedNodes) {
+            // Buscamos un nodo <link> que sea una hoja de estilos y no sea una fuente
+            if (node.tagName === 'LINK' && node.rel === 'stylesheet' && !node.href.includes('fonts.googleapis')) {
+              node.rel = 'preload';
+              node.as = 'style';
+              node.onload = () => {
+                node.rel = 'stylesheet';
+              };
+              // Una vez que lo encontramos y modificamos, ya no necesitamos observar
+              observer.disconnect();
+            }
+          }
+        }
+      });
+      observer.observe(document.head, { childList: true });
+    </script>
   </head>
   <body>
     <div id="root"></div>

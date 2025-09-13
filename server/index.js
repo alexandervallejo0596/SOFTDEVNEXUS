@@ -1,14 +1,28 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || origin === 'https://softdevnexus.com') {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/api/contact', async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, country, phone, message } = req.body;
 
   try {
     const transporter = nodemailer.createTransport({
@@ -18,9 +32,6 @@ app.post('/api/contact', async (req, res) => {
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
-      },
-      tls: {
-        rejectUnauthorized: false,
       },
     });
 
@@ -32,17 +43,20 @@ app.post('/api/contact', async (req, res) => {
         <h3>Mensaje recibido desde tu sitio web:</h3>
         <p><strong>Nombre:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>País:</strong> ${country}</p>
+        <p><strong>Celular:</strong> ${phone}</p>
         <p><strong>Mensaje:</strong> ${message}</p>
       `,
     });
 
     res.status(200).json({ success: true, message: 'Correo enviado exitosamente' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Error al enviar el correo' });
+    console.error('Error al enviar correo:', error);
+    res.status(500).json({ success: false, message: `Error del servidor: ${error.message}` });
   }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor funcionando en http://localhost:${process.env.PORT}`);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Servidor funcionando en http://localhost:${port}`);
 });

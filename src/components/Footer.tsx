@@ -6,11 +6,10 @@ type Page = 'home' | 'services' | 'process' | 'portfolio' | 'contact';
 
 // Custom SoftDev Nexus Logo Component
 const FooterLogo: React.FC<{ className?: string }> = ({ className = "w-12 h-12" }) => (
-  <img src="/logo-personalizado.png" alt="SoftDev Nexus Logo" className={className + " object-contain"} />
+  <img src="/logo-optimizado.png" alt="SoftDev Nexus Logo" className={className + " object-contain"} />
 );
 
 export const Footer: React.FC = () => {
-                <FooterLogo className="w-12 h-12" />
   const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
 
