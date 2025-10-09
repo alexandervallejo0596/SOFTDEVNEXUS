@@ -91,24 +91,21 @@ export const Portfolio: React.FC = () => {
   const filteredProjects = projects;
 
   return (
-    <div className="min-h-screen bg-dark-gradient text-white overflow-hidden relative">
-      <div className="fixed inset-0 animated-dark-bg">
-        <div className="absolute inset-0 cyber-grid opacity-30"></div>
-      </div>
+    <div className="min-h-screen bg-white text-gray-800 overflow-hidden relative">
 
       <section className="relative pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
           <div className={`space-y-8 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-            <div className="inline-flex items-center glass border-brand-teal-accent/30 rounded-full px-6 py-3 text-sm font-medium text-brand-teal-accent">
+            <div className="inline-flex items-center bg-blue-100 border border-blue-200 rounded-full px-6 py-3 text-sm font-medium text-blue-800">
               <Award className="w-4 h-4 mr-2" />
               Portafolio de Proyectos Exitosos
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="text-white">Nuestro</span>
+              <span className="text-gray-900">Nuestro</span>
               <br />
-              <span className="gradient-text-green">portafolio</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">portafolio</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Descubre algunos de nuestros proyectos más exitosos y los resultados extraordinarios que hemos logrado. Cada sitio web está diseñado y desarrollado con atención al detalle y enfoque en resultados medibles.
             </p>
           </div>
@@ -121,7 +118,7 @@ export const Portfolio: React.FC = () => {
             {filteredProjects.map((project) => (
               <div 
                 key={project.id} 
-                className="glass rounded-3xl overflow-hidden"
+                className="bg-white rounded-3xl overflow-hidden shadow-lg"
               >
                 <div className="relative group">
                   <img 
@@ -132,32 +129,32 @@ export const Portfolio: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                   
                   <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-                    <div className="bg-gradient-to-r from-brand-logo-blue to-brand-teal-accent text-white px-4 py-2 rounded-full text-sm font-medium">
+                    <div className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-medium">
                       Corporativo
                     </div>
-                    <div className="glass text-white px-3 py-1 rounded-full text-sm">
+                    <div className="bg-white/30 backdrop-blur-lg text-black px-3 py-1 rounded-full text-sm">
                       {project.year}
                     </div>
                   </div>
                   
-                  <a href={project.url} target="_blank" rel="noopener noreferrer" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glass p-4 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ExternalLink className="w-6 h-6 text-white" />
+                  <a href={project.url} target="_blank" rel="noopener noreferrer" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/30 backdrop-blur-lg p-4 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ExternalLink className="w-6 h-6 text-black" />
                   </a>
                 </div>
                 
                 <div className="p-8">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-                    <span className="text-gray-400 text-sm">{project.duration}</span>
+                    <h3 className="text-2xl font-bold text-gray-900">{project.title}</h3>
+                    <span className="text-gray-500 text-sm">{project.duration}</span>
                   </div>
                   
-                  <p className="text-gray-300 mb-6 leading-relaxed">{project.description}</p>
+                  <p className="text-gray-600 mb-6 leading-relaxed">{project.description}</p>
                   
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.technologies.map((tech, techIndex) => (
                       <span 
                         key={techIndex}
-                        className="bg-brand-teal-accent/20 text-brand-teal-accent text-xs px-3 py-1 rounded-full border border-brand-teal-accent/30"
+                        className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full border border-blue-200"
                       >
                         {tech}
                       </span>
@@ -165,11 +162,11 @@ export const Portfolio: React.FC = () => {
                   </div>
                   
                   <div className="mb-6">
-                    <h4 className="text-white font-semibold mb-3">Características principales:</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3">Características principales:</h4>
                     <div className="grid grid-cols-2 gap-2">
                       {project.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center text-gray-300 text-sm">
-                          <div className="w-2 h-2 bg-brand-teal-accent rounded-full mr-2"></div>
+                        <div key={featureIndex} className="flex items-center text-gray-600 text-sm">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
                           <span>{feature}</span>
                         </div>
                       ))}
@@ -180,7 +177,7 @@ export const Portfolio: React.FC = () => {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-gradient-to-r from-brand-logo-blue to-brand-teal-accent text-white py-4 rounded-xl font-semibold flex items-center justify-center space-x-2"
+                    className="w-full bg-gradient-to-r from-blue-600 to-teal-500 text-white py-4 rounded-xl font-semibold flex items-center justify-center space-x-2"
                   >
                     <span>Ver proyecto completo</span>
                     <ExternalLink className="w-5 h-5" />
@@ -192,46 +189,46 @@ export const Portfolio: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative py-20 bg-gradient-to-r from-brand-dark-teal/50 to-brand-dark-navy/50">
+      <section className="relative py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Resultados que hablan por sí solos
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Más de 150 proyectos completados, clientes satisfechos y presencia internacional. Estos números reflejan nuestro compromiso y calidad.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
             {stats.map((stat, index) => (
               <div key={index} className="group">
-                <div className="w-24 h-24 bg-gradient-to-r from-brand-logo-blue to-brand-teal-accent rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-teal-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
                   <stat.icon width="48" height="48" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24"/>
                 </div>
-                <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
-                <div className="text-gray-300 mb-2">{stat.label}</div>
-                <div className="text-brand-teal-accent text-sm">{stat.description}</div>
+                <div className="text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
+                <div className="text-gray-600 mb-2">{stat.label}</div>
+                <div className="text-blue-600 text-sm">{stat.description}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative py-32 animated-dark-bg">
+      <section className="relative py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              ¿Te gustó lo que <span className="gradient-text-green">viste?</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              ¿Te gustó lo que <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">viste?</span>
             </h2>
-            <p className="text-xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               Estos son solo algunos ejemplos de lo que podemos hacer por tu negocio. Cuéntanos tu proyecto y hagamos realidad tu visión digital con resultados extraordinarios.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link to="/contact" className="bg-gradient-to-r from-brand-logo-blue to-brand-teal-accent text-white px-10 py-5 rounded-full text-lg font-bold flex items-center justify-center space-x-2">
+              <Link to="/contact" className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-10 py-5 rounded-full text-lg font-bold flex items-center justify-center space-x-2">
                 <span>Solicitar cotización</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              <a href="https://wa.me/573124549040" target="_blank" rel="noopener noreferrer" className="border-2 border-brand-teal-accent text-brand-teal-accent px-10 py-5 rounded-full text-lg font-bold">
+              <a href="https://wa.me/573124549040" target="_blank" rel="noopener noreferrer" className="border-2 border-gray-300 text-gray-700 px-10 py-5 rounded-full text-lg font-bold hover:bg-gray-100 hover:border-gray-400">
                 Agendar consulta gratuita
               </a>
             </div>

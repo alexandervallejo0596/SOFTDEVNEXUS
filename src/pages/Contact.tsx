@@ -107,8 +107,7 @@ export const Contact: React.FC = () => {
         setIsSubmitted(true);
         setIsSubmitting(false);
         setTimeout(() => {
-          setIsSubmitted(false);
-          setFormData({ name: '', email: '', country: '', phone: '', message: '' });
+          navigate('/');
         }, 3000);
       } else {
         const errorData = await response.json();
@@ -127,28 +126,28 @@ export const Contact: React.FC = () => {
       title: 'Email',
       details: 'contacto@softdevnexus.com',
       description: 'Envíanos un correo para consultas generales.',
-      color: 'from-brand-logo-blue to-brand-teal-accent'
+      color: 'from-blue-600 to-teal-500'
     },
     {
       icon: Phone,
       title: 'Teléfono',
       details: '+57 312 454 9040',
       description: 'Llámanos para una respuesta más rápida.',
-      color: 'from-brand-teal-accent to-brand-logo-dark-blue'
+      color: 'from-blue-600 to-teal-500'
     },
     {
       icon: MapPin,
       title: 'Ubicación',
       details: 'Colombia',
       description: 'Disponibles para reuniones presenciales y remotas.',
-      color: 'from-brand-logo-dark-blue to-brand-logo-light-blue'
+      color: 'from-blue-600 to-teal-500'
     },
     {
       icon: Clock,
       title: 'Horario',
       details: 'Lun - Vie, 9am - 6pm (GMT-5)',
       description: 'Nuestro equipo está disponible durante el horario laboral.',
-      color: 'from-brand-logo-light-blue to-brand-teal-accent'
+      color: 'from-blue-600 to-teal-500'
     }
   ];
 
@@ -161,101 +160,90 @@ export const Contact: React.FC = () => {
 
   if (isSubmitted) {
     return (
-      <div class="min-h-screen bg-dark-gradient text-white flex items-center justify-center relative overflow-hidden">
-        <div class="floating-code-container fixed inset-0 pointer-events-none z-10"></div>
-        <div class="particles-container fixed inset-0 pointer-events-none z-10"></div>
+      <div className="min-h-screen bg-white text-gray-800 flex items-center justify-center relative overflow-hidden">
+        <div className="floating-code-container fixed inset-0 pointer-events-none z-10"></div>
+        <div className="particles-container fixed inset-0 pointer-events-none z-10"></div>
 
-        <div class="fixed inset-0 animated-dark-bg">
-          <div class="absolute inset-0 cyber-grid opacity-30"></div>
-          <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-logo-blue/10 rounded-full blur-3xl animate-float"></div>
-          <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-teal-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        </div>
-
-        <div class="text-center animate-bounce-in relative z-20">
-          <div class="w-24 h-24 bg-gradient-to-r from-brand-logo-blue to-brand-teal-accent rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse-glow">
-            <CheckCircle class="w-12 h-12 text-white" />
+        <div className="text-center animate-bounce-in relative z-20 p-4">
+          <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
+            <CheckCircle className="w-12 h-12 text-white" />
           </div>
-          <h2 class="text-4xl font-bold text-white mb-4 neon-glow">¡Mensaje Enviado!</h2>
-          <p class="text-xl text-gray-300 mb-6">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">¡Mensaje Enviado!</h2>
+          <p className="text-xl text-gray-600 mb-6">
             Gracias por contactarnos. Hemos recibido tu mensaje y te responderemos pronto.
           </p>
-          <div class="text-brand-teal-accent font-medium neon-glow">
-            Redirigiendo...
-          </div>
+          <button 
+            onClick={() => navigate('/')} 
+            className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:from-blue-700 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            Volver al Inicio
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div class="min-h-screen bg-dark-gradient text-white overflow-hidden relative">
-      <div class="floating-code-container fixed inset-0 pointer-events-none z-10"></div>
-      <div class="particles-container fixed inset-0 pointer-events-none z-10"></div>
+    <div className="min-h-screen bg-white text-gray-800 overflow-hidden relative">
+      <div className="floating-code-container fixed inset-0 pointer-events-none z-10"></div>
+      <div className="particles-container fixed inset-0 pointer-events-none z-10"></div>
 
-      <div class="fixed inset-0 animated-dark-bg">
-        <div class="absolute inset-0 cyber-grid opacity-30"></div>
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-logo-blue/10 rounded-full blur-3xl animate-float"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-teal-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-brand-logo-dark-blue/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
-      </div>
-
-      <section class="relative pt-32 pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
-          <div class={`space-y-8 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div class="inline-flex items-center glass border-brand-teal-accent/30 rounded-full px-6 py-3 text-sm font-medium text-brand-teal-accent">
-              <MessageSquare class="w-4 h-4 mr-2" />
+      <section className="relative pt-32 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
+          <div className={`space-y-8 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className="inline-flex items-center bg-blue-100 border border-blue-200 rounded-full px-6 py-3 text-sm font-medium text-blue-800">
+              <MessageSquare className="w-4 h-4 mr-2" />
               Contáctanos
             </div>
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span class="text-white">Hablemos de</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <span className="text-gray-900">Hablemos de</span>
               <br />
-              <span class="gradient-text-green animate-text-glow">tu Próximo Proyecto</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">tu Próximo Proyecto</span>
             </h1>
-            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Estamos aquí para responder a tus preguntas, discutir tus ideas y ayudarte a encontrar la mejor solución tecnológica para tu negocio. ¡No dudes en contactarnos!
             </p>
           </div>
         </div>
       </section>
 
-      <section class="relative py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+      <section className="relative py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
             {contactInfo.map((info, index) => (
               <div 
                 key={index} 
-                class="glass p-8 rounded-2xl text-center hover-lift card-hover animate-fade-in-up"
+                className="bg-white p-8 rounded-2xl text-center hover-lift card-hover animate-fade-in-up shadow-lg"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div class={`w-20 h-20 bg-gradient-to-r ${info.color} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 animate-pulse-glow`}>
-                  <info.icon class="w-10 h-10 text-white" />
+                <div className={`w-20 h-20 bg-gradient-to-r ${info.color} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                  <info.icon className="w-10 h-10 text-white" />
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">{info.title}</h3>
-                <p class="text-lg text-brand-teal-accent font-semibold mb-3 neon-glow">{info.details}</p>
-                <p class="text-gray-300 text-sm leading-relaxed">{info.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{info.title}</h3>
+                <p className="text-lg text-blue-600 font-semibold mb-3">{info.details}</p>
+                <p className="text-gray-600 text-sm leading-relaxed">{info.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section class="relative py-20 code-bg">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div class="glass rounded-3xl p-8 md:p-12 animate-fade-in-up">
-            <div class="text-center mb-12">
-              <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                Envíanos <span class="gradient-text-green">un Mensaje</span>
+      <section className="relative py-20 bg-gray-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="bg-white rounded-3xl p-8 md:p-12 animate-fade-in-up shadow-lg">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Envíanos <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">un Mensaje</span>
               </h2>
-              <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Completa el formulario y uno de nuestros expertos se pondrá en contacto contigo a la brevedad.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} class="space-y-8">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                  <label htmlFor="name" class="flex items-center text-sm font-medium text-gray-300 mb-3">
-                    <User class="w-4 h-4 mr-2" />
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                    <User className="w-4 h-4 mr-2" />
                     Nombre Completo *
                   </label>
                   <input
@@ -265,13 +253,13 @@ export const Contact: React.FC = () => {
                     required
                     value={formData.name}
                     onChange={handleInputChange}
-                    class="w-full px-6 py-4 bg-gray-800/50 border-brand-teal-accent/30 rounded-xl focus:ring-2 focus:ring-brand-teal-accent focus:border-brand-teal-accent transition-all duration-300 text-white placeholder-gray-400"
+                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
                     placeholder="Tu Nombre Completo"
                   />
                 </div>
-                <div class="space-y-2">
-                  <label htmlFor="email" class="flex items-center text-sm font-medium text-gray-300 mb-3">
-                    <Mail class="w-4 h-4 mr-2" />
+                <div className="space-y-2">
+                  <label htmlFor="email" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                    <Mail className="w-4 h-4 mr-2" />
                     Correo Electrónico *
                   </label>
                   <input
@@ -281,13 +269,13 @@ export const Contact: React.FC = () => {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    class="w-full px-6 py-4 bg-gray-800/50 border-brand-teal-accent/30 rounded-xl focus:ring-2 focus:ring-brand-teal-accent focus:border-brand-teal-accent transition-all duration-300 text-white placeholder-gray-400"
+                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
                     placeholder="tu.email@ejemplo.com"
                   />
                 </div>
-                <div class="space-y-2">
-                  <label htmlFor="country" class="flex items-center text-sm font-medium text-gray-300 mb-3">
-                    <Globe class="w-4 h-4 mr-2" />
+                <div className="space-y-2">
+                  <label htmlFor="country" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                    <Globe className="w-4 h-4 mr-2" />
                     País *
                   </label>
                   <input
@@ -297,13 +285,13 @@ export const Contact: React.FC = () => {
                     required
                     value={formData.country}
                     onChange={handleInputChange}
-                    class="w-full px-6 py-4 bg-gray-800/50 border-brand-teal-accent/30 rounded-xl focus:ring-2 focus:ring-brand-teal-accent focus:border-brand-teal-accent transition-all duration-300 text-white placeholder-gray-400"
+                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
                     placeholder="País de Residencia"
                   />
                 </div>
-                <div class="space-y-2">
-                  <label htmlFor="phone" class="flex items-center text-sm font-medium text-gray-300 mb-3">
-                    <Phone class="w-4 h-4 mr-2" />
+                <div className="space-y-2">
+                  <label htmlFor="phone" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                    <Phone className="w-4 h-4 mr-2" />
                     Teléfono *
                   </label>
                   <input
@@ -313,15 +301,15 @@ export const Contact: React.FC = () => {
                     required
                     value={formData.phone}
                     onChange={handleInputChange}
-                    class="w-full px-6 py-4 bg-gray-800/50 border-brand-teal-accent/30 rounded-xl focus:ring-2 focus:ring-brand-teal-accent focus:border-brand-teal-accent transition-all duration-300 text-white placeholder-gray-400"
+                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
                     placeholder="Tu número de teléfono"
                   />
                 </div>
               </div>
 
-              <div class="space-y-2">
-                <label htmlFor="message" class="flex items-center text-sm font-medium text-gray-300 mb-3">
-                  <MessageSquare class="w-4 h-4 mr-2" />
+              <div className="space-y-2">
+                <label htmlFor="message" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                  <MessageSquare className="w-4 h-4 mr-2" />
                   Tu Mensaje *
                 </label>
                 <textarea
@@ -331,31 +319,31 @@ export const Contact: React.FC = () => {
                   rows={6}
                   value={formData.message}
                   onChange={handleInputChange}
-                  class="w-full px-6 py-4 bg-gray-800/50 border-brand-teal-accent/30 rounded-xl focus:ring-2 focus:ring-brand-teal-accent focus:border-brand-teal-accent transition-all duration-300 resize-none text-white placeholder-gray-400"
-                  placeholder="Cuéntanos sobre tu proyecto, tus ideas y cómo podemos ayudarte..."
+                  className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none text-gray-900 placeholder-gray-500"
+                  placeholder="Cuéntanos sobre tu proyecto, tus objetivos y cómo podemos ayudarte a tener éxito..."
                 />
               </div>
 
-              <div class="text-center">
+              <div className="text-center">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  class="bg-gradient-to-r from-brand-logo-blue to-brand-teal-accent text-white px-12 py-5 rounded-full text-lg font-bold hover:from-brand-logo-blue/80 hover:to-brand-teal-accent/80 transition-all duration-300 transform hover:scale-105 btn-glow flex items-center justify-center space-x-3 mx-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-12 py-5 rounded-full text-lg font-bold hover:from-blue-700 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-3 mx-auto disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
-                      <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Enviando<span class="loading-dots"></span></span>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Enviando...</span>
                     </>
                   ) : (
                     <>
-                      <Send class="w-5 h-5" />
+                      <Send className="w-5 h-5" />
                       <span>Enviar Mensaje</span>
-                      <ArrowRight class="w-5 h-5 animate-arrow" />
+                      <ArrowRight className="w-5 h-5 animate-arrow" />
                     </>
                   )}
                 </button>
-                <p class="text-sm text-gray-400 mt-6">
+                <p className="text-sm text-gray-500 mt-6">
                   * Nos pondremos en contacto contigo en las próximas 24 horas.
                 </p>
               </div>
@@ -364,53 +352,53 @@ export const Contact: React.FC = () => {
         </div>
       </section>
 
-      <section class="relative py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div class="text-center mb-16 animate-fade-in-up">
-            <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">
-              ¿Por Qué <span class="gradient-text-green">Elegirnos?</span>
+      <section className="relative py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              ¿Por Qué <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">Elegirnos?</span>
             </h3>
           </div>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit, index) => (
               <div 
                 key={index} 
-                class="flex items-center space-x-4 glass p-6 rounded-xl animate-fade-in-up hover-lift"
+                className="flex items-center space-x-4 bg-white p-6 rounded-xl animate-fade-in-up hover-lift shadow-lg"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <CheckCircle class="w-8 h-8 text-brand-teal-accent flex-shrink-0" />
-                <span class="text-white font-medium">{benefit}</span>
+                <CheckCircle className="w-8 h-8 text-blue-500 flex-shrink-0" />
+                <span className="text-gray-800 font-medium">{benefit}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section class="relative py-20 bg-gradient-to-r from-brand-dark-teal/30 to-brand-dark-navy/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div class="glass rounded-3xl p-12 text-center animate-fade-in-up">
-            <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">
-              Nuestra <span class="gradient-text-green">Disponibilidad</span>
+      <section className="relative py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="bg-white rounded-3xl p-12 text-center animate-fade-in-up shadow-lg">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Nuestra <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">Disponibilidad</span>
             </h3>
-            <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Estamos ubicados en el corazón de la innovación digital, pero nuestro alcance es global. Nos adaptamos a tus necesidades, ya sea en persona o de forma remota.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div class="bg-gradient-to-r from-brand-logo-blue/20 to-brand-teal-accent/20 border-brand-teal-accent/30 p-6 rounded-2xl">
-                <MapPin class="w-12 h-12 text-brand-teal-accent mx-auto mb-4" />
-                <h4 class="text-white font-bold mb-2">Reuniones en Persona</h4>
-                <p class="text-gray-300 text-sm">Podemos coordinar reuniones en nuestras oficinas o en tu ubicación.</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-gray-100 p-6 rounded-2xl">
+                <MapPin className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <h4 className="text-gray-900 font-bold mb-2">Reuniones en Persona</h4>
+                <p className="text-gray-600 text-sm">Podemos coordinar reuniones en nuestras oficinas o en tu ubicación.</p>
               </div>
-              <div class="bg-gradient-to-r from-brand-teal-accent/20 to-brand-logo-dark-blue/20 border-brand-teal-accent/30 p-6 rounded-2xl">
-                <Globe class="w-12 h-12 text-brand-teal-accent mx-auto mb-4" />
-                <h4 class="text-white font-bold mb-2">Colaboración Remota</h4>
-                <p class="text-gray-300 text-sm">Trabajamos con clientes de todo el mundo a través de herramientas de colaboración.</p>
+              <div className="bg-gray-100 p-6 rounded-2xl">
+                <Globe className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <h4 className="text-gray-900 font-bold mb-2">Colaboración Remota</h4>
+                <p className="text-gray-600 text-sm">Trabajamos con clientes de todo el mundo a través de herramientas de colaboración.</p>
               </div>
-              <div class="bg-gradient-to-r from-brand-logo-dark-blue/20 to-brand-logo-light-blue/20 border-brand-teal-accent/30 p-6 rounded-2xl">
-                <Users class="w-12 h-12 text-brand-logo-light-blue mx-auto mb-4" />
-                <h4 class="text-white font-bold mb-2">Proyectos Internacionales</h4>
-                <p class="text-gray-300 text-sm">Tenemos experiencia en la gestión de proyectos a nivel internacional.</p>
+              <div className="bg-gray-100 p-6 rounded-2xl">
+                <Users className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <h4 className="text-gray-900 font-bold mb-2">Proyectos Internacionales</h4>
+                <p className="text-gray-600 text-sm">Tenemos experiencia en la gestión de proyectos a nivel internacional.</p>
               </div>
             </div>
           </div>

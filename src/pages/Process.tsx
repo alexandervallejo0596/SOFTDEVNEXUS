@@ -8,7 +8,6 @@ export const Process: React.FC = () => {
   useEffect(() => {
     setIsVisible(true);
 
-    // Create floating code elements
     const createFloatingCode = () => {
       const codeSnippets = [
         'const process = efficient;',
@@ -41,7 +40,6 @@ export const Process: React.FC = () => {
       });
     };
 
-    // Create particles
     const createParticles = () => {
       const container = document.querySelector('.particles-container');
       if (!container) return;
@@ -92,7 +90,7 @@ export const Process: React.FC = () => {
       ],
       duration: '1-2 semanas',
       deliverables: ['Documento de requerimientos', 'Análisis competitivo', 'Propuesta técnica', 'Cronograma detallado'],
-      color: 'from-green-500 to-cyan-500'
+      color: 'from-blue-600 to-teal-500'
     },
     {
       number: '02',
@@ -111,7 +109,7 @@ export const Process: React.FC = () => {
       ],
       duration: '2-3 semanas',
       deliverables: ['Wireframes completos', 'Diseños UI finales', 'Prototipo interactivo', 'Guía de estilo'],
-      color: 'from-cyan-500 to-blue-500'
+      color: 'from-teal-500 to-cyan-500'
     },
     {
       number: '03',
@@ -130,7 +128,7 @@ export const Process: React.FC = () => {
       ],
       duration: '3-6 semanas',
       deliverables: ['Código fuente completo', 'Documentación técnica', 'Reportes de testing', 'Sitio en staging'],
-      color: 'from-blue-500 to-purple-500'
+      color: 'from-cyan-500 to-blue-500'
     },
     {
       number: '04',
@@ -149,7 +147,7 @@ export const Process: React.FC = () => {
       ],
       duration: '1 semana',
       deliverables: ['Sitio web en producción', 'Manual de usuario', 'Accesos y credenciales', 'Plan de mantenimiento'],
-      color: 'from-purple-500 to-green-500'
+      color: 'from-blue-500 to-teal-400'
     }
   ];
 
@@ -211,35 +209,27 @@ export const Process: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-dark-gradient text-white overflow-hidden relative">
+    <div className="min-h-screen bg-white text-gray-800 overflow-hidden relative">
       {/* Floating Code Container */}
       <div className="floating-code-container fixed inset-0 pointer-events-none z-10"></div>
       
       {/* Particles Container */}
       <div className="particles-container fixed inset-0 pointer-events-none z-10"></div>
 
-      {/* Animated Background */}
-      <div className="fixed inset-0 animated-dark-bg">
-        <div className="absolute inset-0 cyber-grid opacity-30"></div>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
-      </div>
-
       {/* Hero Section */}
       <section className="relative pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
           <div className={`space-y-8 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div className="inline-flex items-center glass border border-green-500/30 rounded-full px-6 py-3 text-sm font-medium text-green-300">
+            <div className="inline-flex items-center bg-blue-100 border border-blue-200 rounded-full px-6 py-3 text-sm font-medium text-blue-800">
               <Rocket className="w-4 h-4 mr-2" />
               Proceso de Desarrollo Profesional
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="text-white">Nuestro proceso</span>
+              <span className="text-gray-900">Nuestro proceso</span>
               <br />
-              <span className="gradient-text-green animate-text-glow">probado y eficiente</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">probado y eficiente</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Un enfoque estructurado y metodológico que garantiza resultados excepcionales. 
               Cada proyecto sigue un proceso meticuloso diseñado para maximizar el éxito y la satisfacción del cliente.
             </p>
@@ -251,10 +241,10 @@ export const Process: React.FC = () => {
       <section className="relative py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Timeline del <span className="gradient-text-green">proyecto</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Timeline del <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">proyecto</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Cronograma típico para un proyecto de desarrollo web completo
             </p>
           </div>
@@ -263,12 +253,12 @@ export const Process: React.FC = () => {
             {timeline.map((item, index) => (
               <div 
                 key={index} 
-                className="glass p-6 rounded-2xl text-center animate-fade-in-up"
+                className="bg-white p-6 rounded-2xl text-center animate-fade-in-up shadow-lg"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="text-green-400 font-bold mb-2 neon-glow">{item.week}</div>
-                <div className="text-xl font-bold text-white mb-2">{item.phase}</div>
-                <div className="text-gray-300 text-sm">{item.status}</div>
+                <div className="text-blue-600 font-bold mb-2">{item.week}</div>
+                <div className="text-xl font-bold text-gray-900 mb-2">{item.phase}</div>
+                <div className="text-gray-600 text-sm">{item.status}</div>
               </div>
             ))}
           </div>
@@ -276,7 +266,7 @@ export const Process: React.FC = () => {
       </section>
 
       {/* Process Steps */}
-      <section className="relative py-20 code-bg">
+      <section className="relative py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="space-y-32">
             {processSteps.map((step, index) => (
@@ -285,24 +275,24 @@ export const Process: React.FC = () => {
               }`}>
                 <div className="flex-1 animate-fade-in-up" style={{ animationDelay: `${index * 0.2}s` }}>
                   <div className="flex items-center mb-8">
-                    <div className={`w-20 h-20 bg-gradient-to-r ${step.color} rounded-full flex items-center justify-center text-2xl font-bold mr-6 animate-pulse-glow neon-glow`}>
+                    <div className={`w-20 h-20 bg-gradient-to-r ${step.color} rounded-full flex items-center justify-center text-2xl font-bold mr-6 shadow-lg text-white`}>
                       {step.number}
                     </div>
                     <div>
-                      <h3 className="text-3xl font-bold text-white mb-2">{step.title}</h3>
-                      <p className="text-green-400 font-medium text-lg neon-glow">{step.subtitle}</p>
+                      <h3 className="text-3xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                      <p className="text-blue-600 font-medium text-lg">{step.subtitle}</p>
                     </div>
                   </div>
                   
-                  <p className="text-xl text-gray-300 mb-8 leading-relaxed">{step.description}</p>
+                  <p className="text-xl text-gray-600 mb-8 leading-relaxed">{step.description}</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div>
-                      <h4 className="text-lg font-bold text-white mb-4">Actividades principales:</h4>
+                      <h4 className="text-lg font-bold text-gray-900 mb-4">Actividades principales:</h4>
                       <ul className="space-y-3">
                         {step.details.map((detail, detailIndex) => (
-                          <li key={detailIndex} className="flex items-start text-gray-300">
-                            <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
+                          <li key={detailIndex} className="flex items-start text-gray-600">
+                            <CheckCircle className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
                             <span>{detail}</span>
                           </li>
                         ))}
@@ -310,11 +300,11 @@ export const Process: React.FC = () => {
                     </div>
                     
                     <div>
-                      <h4 className="text-lg font-bold text-white mb-4">Entregables:</h4>
+                      <h4 className="text-lg font-bold text-gray-900 mb-4">Entregables:</h4>
                       <ul className="space-y-3">
                         {step.deliverables.map((deliverable, deliverableIndex) => (
-                          <li key={deliverableIndex} className="flex items-start text-gray-300">
-                            <div className="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                          <li key={deliverableIndex} className="flex items-start text-gray-600">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
                             <span>{deliverable}</span>
                           </li>
                         ))}
@@ -322,9 +312,9 @@ export const Process: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="inline-flex items-center glass border border-green-500/30 rounded-full px-6 py-3">
-                    <Clock className="w-5 h-5 text-green-400 mr-2" />
-                    <span className="text-green-300 font-medium">
+                  <div className="inline-flex items-center bg-gray-100 border border-gray-200 rounded-full px-6 py-3">
+                    <Clock className="w-5 h-5 text-blue-600 mr-2" />
+                    <span className="text-gray-700 font-medium">
                       Duración: {step.duration}
                     </span>
                   </div>
@@ -332,8 +322,8 @@ export const Process: React.FC = () => {
                 
                 <div className="flex-1 animate-fade-in-up" style={{ animationDelay: `${index * 0.2 + 0.1}s` }}>
                   <div className="relative">
-                    <div className={`absolute inset-0 bg-gradient-to-r ${step.color} rounded-3xl blur-2xl opacity-20 animate-pulse-glow`}></div>
-                    <div className="relative glass p-0 rounded-3xl flex items-center justify-center">
+                    <div className={`absolute inset-0 bg-gradient-to-r ${step.color} rounded-3xl blur-2xl opacity-10`}></div>
+                    <div className="relative bg-white/30 backdrop-blur-lg p-0 rounded-3xl flex items-center justify-center shadow-lg">
                       <video
                         src={`/assets/videos/video${index + 1}.mp4`}
                         style={{ width: '100%', height: '400px', maxWidth: '700px', objectFit: 'cover', borderRadius: '1.5rem' }}
@@ -352,13 +342,13 @@ export const Process: React.FC = () => {
       </section>
 
       {/* Methodologies Section */}
-      <section className="relative py-20 matrix-bg">
+      <section className="relative py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Metodologías <span className="gradient-text-green">avanzadas</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Metodologías <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">avanzadas</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Utilizamos las mejores prácticas y metodologías de la industria
             </p>
           </div>
@@ -367,14 +357,14 @@ export const Process: React.FC = () => {
             {methodologies.map((methodology, index) => (
               <div 
                 key={index} 
-                className="glass p-8 rounded-2xl text-center hover-lift card-hover animate-fade-in-up"
+                className="bg-white p-8 rounded-2xl text-center hover-lift card-hover animate-fade-in-up shadow-lg"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 animate-pulse-glow">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   <methodology.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">{methodology.name}</h3>
-                <p className="text-gray-300 leading-relaxed">{methodology.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{methodology.name}</h3>
+                <p className="text-gray-600 leading-relaxed">{methodology.description}</p>
               </div>
             ))}
           </div>
@@ -382,13 +372,13 @@ export const Process: React.FC = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="relative py-20 code-bg">
+      <section className="relative py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Beneficios de nuestro <span className="gradient-text-green">proceso estructurado</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Beneficios de nuestro <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">proceso estructurado</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Un enfoque metodológico que garantiza resultados excepcionales y una experiencia sin complicaciones
             </p>
           </div>
@@ -397,20 +387,20 @@ export const Process: React.FC = () => {
             {benefits.map((benefit, index) => (
               <div 
                 key={index} 
-                className="glass p-8 rounded-2xl hover-lift card-hover animate-fade-in-up"
+                className="bg-white p-8 rounded-2xl hover-lift card-hover animate-fade-in-up shadow-lg"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-start space-x-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-cyan-500 rounded-2xl flex items-center justify-center flex-shrink-0 animate-pulse-glow">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-teal-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
                     <benefit.icon className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-4">{benefit.title}</h3>
-                    <p className="text-gray-300 mb-6 leading-relaxed">{benefit.description}</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{benefit.title}</h3>
+                    <p className="text-gray-600 mb-6 leading-relaxed">{benefit.description}</p>
                     <ul className="space-y-2">
                       {benefit.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-gray-300">
-                          <CheckCircle className="w-4 h-4 text-green-400 mr-3" />
+                        <li key={featureIndex} className="flex items-center text-gray-600">
+                          <CheckCircle className="w-4 h-4 text-blue-500 mr-3" />
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -424,18 +414,18 @@ export const Process: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-32 animated-dark-bg">
+      <section className="relative py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
           <div className="animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              ¿Listo para comenzar tu <span className="gradient-text-green animate-text-glow">proyecto?</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              ¿Listo para comenzar tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">proyecto?</span>
             </h2>
-            <p className="text-xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               Inicia tu proyecto con nosotros y experimenta un proceso de desarrollo web 
               profesional, transparente y sin complicaciones que garantiza resultados excepcionales.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link to="/contact" className="bg-gradient-to-r from-green-500 to-cyan-500 text-white px-10 py-5 rounded-full text-lg font-bold hover:from-green-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 btn-glow flex items-center justify-center space-x-2">
+              <Link to="/contact" className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-10 py-5 rounded-full text-lg font-bold hover:from-blue-700 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2">
                 <span>Comienza tu proyecto</span>
                 <ArrowRight className="w-5 h-5 animate-arrow" />
               </Link>
@@ -443,7 +433,7 @@ export const Process: React.FC = () => {
                 href="https://wa.me/573124549040"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-green-500 text-green-400 px-10 py-5 rounded-full text-lg font-bold hover:bg-green-500/10 transition-all duration-300 flex items-center justify-center"
+                className="border-2 border-gray-300 text-gray-700 px-10 py-5 rounded-full text-lg font-bold hover:bg-gray-100 hover:border-gray-400 transition-all duration-300 flex items-center justify-center"
               >
                 Solicitar consulta gratuita
               </a>

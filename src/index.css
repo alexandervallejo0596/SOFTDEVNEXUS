@@ -221,7 +221,7 @@
 
 /* Base body styles */
 body {
-  @apply bg-brand-dark-navy text-brand-white;
+  @apply bg-white text-black;
 }
 
 /* Custom scrollbar */
@@ -230,7 +230,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: theme('colors.brand-dark-navy');
+  background: theme('colors.gray.100');
 }
 
 ::-webkit-scrollbar-thumb {
