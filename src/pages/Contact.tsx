@@ -110,9 +110,9 @@ export const Contact: React.FC = () => {
           navigate('/');
         }, 3000);
       } else {
-        const errorData = await response.json();
+        const errorText = await response.text();
         setIsSubmitting(false);
-        alert(`Error: ${errorData.message}`);
+        alert(`Error al enviar el formulario: ${errorText}`);
       }
     } catch (error) {
       setIsSubmitting(false);
