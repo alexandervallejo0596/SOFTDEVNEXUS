@@ -34,18 +34,17 @@ export const Contact: React.FC = () => {
     if (!form.current) return;
     setIsSubmitting(true);
 
-    // Send the primary email to the admin
-    emailjs.sendForm('service_qrx5fjf', 'template_yb41bsm', form.current, 'ozzuEiUYlTlsP62w-')
+    // Use emailjs.send instead of sendForm for more robust submission
+    emailjs.send('service_qrx5fjf', 'template_yb41bsm', formData, 'ozzuEiUYlTlsP62w-')
       .then((result) => {
           console.log('Admin email sent successfully:', result.text);
 
           // Also, send the auto-response email to the user who filled the form
-          emailjs.sendForm('service_qrx5fjf', 'template_l8inkyo', form.current, 'ozzuEiUYlTlsP62w-')
+          emailjs.send('service_qrx5fjf', 'template_l8inkyo', formData, 'ozzuEiUYlTlsP62w-')
             .then((response) => {
               console.log('Auto-response email sent successfully:', response.text);
             }, (err) => {
               console.error('Failed to send auto-response email:', err.text);
-              // We don't change the UI status here as the main email was sent.
             });
           
           setSubmissionStatus('success');
@@ -232,7 +231,7 @@ export const Contact: React.FC = () => {
                         )}
                         </button>
                         <p className="text-sm text-gray-500 mt-6">
-                        * Tu mensaje será enviado a nuestro correo electrónico y recibirás una confirmación.
+                        * Nos pondremos en contacto contigo en las próximas 24 horas.
                         </p>
                     </div>
                     </form>
