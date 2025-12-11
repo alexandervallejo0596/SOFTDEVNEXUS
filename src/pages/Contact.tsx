@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, User, MessageSquare, ArrowRight, Globe, Users } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, User, MessageSquare, ArrowRight, Globe, Users, XCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-const API_URL = import.meta.env.VITE_API_URL || '';
+import emailjs from '@emailjs/browser';
 
 export const Contact: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,72 +15,10 @@ export const Contact: React.FC = () => {
     message: ''
   });
   const navigate = useNavigate();
+  const form = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     setIsVisible(true);
-
-    const createFloatingCode = () => {
-      const codeSnippets = [
-        'const contact = await send();',
-        'function connectWithUs() {}',
-        '<Contact success={true} />',
-        'npm start collaboration',
-        'git push origin success',
-        'export { YourProject };',
-        'import { Dreams } from "reality";',
-        'const partnership = true;'
-      ];
-
-      const container = document.querySelector('.floating-code-container');
-      if (!container) return;
-
-      codeSnippets.forEach((code, index) => {
-        setTimeout(() => {
-          const element = document.createElement('div');
-          element.className = 'floating-code animate-code-float';
-          element.textContent = code;
-          element.style.left = Math.random() * 100 + '%';
-          element.style.animationDelay = Math.random() * 8 + 's';
-          element.style.animationDuration = (8 + Math.random() * 4) + 's';
-          container.appendChild(element);
-
-          setTimeout(() => {
-            element.remove();
-          }, 12000);
-        }, index * 2000);
-      });
-    };
-
-    const createParticles = () => {
-      const container = document.querySelector('.particles-container');
-      if (!container) return;
-
-      for (let i = 0; i < 15; i++) {
-        setTimeout(() => {
-          const particle = document.createElement('div');
-          particle.className = 'particle animate-particle';
-          particle.style.left = Math.random() * 100 + '%';
-          particle.style.animationDelay = Math.random() * 15 + 's';
-          particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-          container.appendChild(particle);
-
-          setTimeout(() => {
-            particle.remove();
-          }, 25000);
-        }, i * 500);
-      }
-    };
-
-    createFloatingCode();
-    createParticles();
-
-    const codeInterval = setInterval(createFloatingCode, 16000);
-    const particleInterval = setInterval(createParticles, 10000);
-
-    return () => {
-      clearInterval(codeInterval);
-      clearInterval(particleInterval);
-    };
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -92,32 +29,35 @@ export const Contact: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.current) return;
     setIsSubmitting(true);
 
-    try {
-      const response = await fetch(`${API_URL}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+    // Send the primary email to the admin
+    emailjs.sendForm('service_qrx5fjf', 'template_yb41bsm', form.current, 'ozzuEiUYlTlsP62w-')
+      .then((result) => {
+          console.log('Admin email sent successfully:', result.text);
 
-      if (response.ok) {
-        setIsSubmitted(true);
-        setIsSubmitting(false);
-        setTimeout(() => {
-          navigate('/');
-        }, 3000);
-      } else {
-        const errorText = await response.text();
-        setIsSubmitting(false);
-        alert(`Error al enviar el formulario: ${errorText}`);
-      }
-    } catch (error) {
-      setIsSubmitting(false);
-      alert(`Error al enviar el formulario: ${error.message}`);
-    }
+          // Also, send the auto-response email to the user who filled the form
+          emailjs.sendForm('service_qrx5fjf', 'template_l8inkyo', form.current, 'ozzuEiUYlTlsP62w-')
+            .then((response) => {
+              console.log('Auto-response email sent successfully:', response.text);
+            }, (err) => {
+              console.error('Failed to send auto-response email:', err.text);
+              // We don't change the UI status here as the main email was sent.
+            });
+          
+          setSubmissionStatus('success');
+          setIsSubmitting(false);
+          setTimeout(() => {
+            navigate('/');
+        }, 4000);
+      }, (error) => {
+          console.error('Failed to send admin email:', error.text);
+          setSubmissionStatus('error');
+          setIsSubmitting(false);
+      });
   };
 
   const contactInfo = [
@@ -130,9 +70,9 @@ export const Contact: React.FC = () => {
     },
     {
       icon: Phone,
-      title: 'Teléfono',
-      details: '+57 312 454 9040',
-      description: 'Llámanos para una respuesta más rápida.',
+      title: 'Teléfono / WhatsApp',
+      details: '+57 324 519 4228',
+      description: 'Llámanos o escríbenos para una respuesta más rápida.',
       color: 'from-blue-600 to-teal-500'
     },
     {
@@ -151,31 +91,24 @@ export const Contact: React.FC = () => {
     }
   ];
 
-  const benefits = [
-    'Consulta inicial gratuita',
-    'Equipo de expertos dedicado',
-    'Soluciones a medida',
-    'Soporte post-lanzamiento'
-  ];
-
-  if (isSubmitted) {
+  if (submissionStatus !== 'idle') {
+    const isSuccess = submissionStatus === 'success';
     return (
       <div className="min-h-screen bg-white text-gray-800 flex items-center justify-center relative overflow-hidden">
-        <div className="floating-code-container fixed inset-0 pointer-events-none z-10"></div>
-        <div className="particles-container fixed inset-0 pointer-events-none z-10"></div>
-
         <div className="text-center animate-bounce-in relative z-20 p-4">
-          <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
-            <CheckCircle className="w-12 h-12 text-white" />
+          <div className={`w-24 h-24 bg-gradient-to-r ${isSuccess ? 'from-blue-600 to-teal-500' : 'from-red-500 to-orange-500'} rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg`}>
+            {isSuccess ? <CheckCircle className="w-12 h-12 text-white" /> : <XCircle className="w-12 h-12 text-white" />}
           </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">¡Mensaje Enviado!</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            {isSuccess ? '¡Mensaje Enviado con Éxito!' : '¡Hubo un Error!'}
+          </h2>
           <p className="text-xl text-gray-600 mb-6">
-            Gracias por contactarnos. Hemos recibido tu mensaje y te responderemos pronto.
+            {isSuccess ? 'Gracias por contactarnos. Hemos enviado una confirmación a tu correo.' : 'No se pudo enviar tu mensaje. Por favor, inténtalo de nuevo más tarde.'}
           </p>
           <button 
-            onClick={() => navigate('/')} 
-            className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:from-blue-700 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-            Volver al Inicio
+            onClick={() => isSuccess ? navigate('/') : setSubmissionStatus('idle')} 
+            className={`text-white px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg ${isSuccess ? 'bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600' : 'bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600'}`}>
+            {isSuccess ? 'Volver al Inicio' : 'Intentar de Nuevo'}
           </button>
         </div>
       </div>
@@ -184,226 +117,128 @@ export const Contact: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 overflow-hidden relative">
-      <div className="floating-code-container fixed inset-0 pointer-events-none z-10"></div>
-      <div className="particles-container fixed inset-0 pointer-events-none z-10"></div>
+        <section className="relative py-20 bg-gray-50">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+                <div className="bg-white rounded-3xl p-8 md:p-12 animate-fade-in-up shadow-lg">
+                    <div className="text-center mb-12">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        Envíanos <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">un Mensaje</span>
+                    </h2>
+                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Completa el formulario y te enviaremos una respuesta a tu correo electrónico a la brevedad.
+                    </p>
+                    </div>
 
-      <section className="relative pt-32 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
-          <div className={`space-y-8 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div className="inline-flex items-center bg-blue-100 border border-blue-200 rounded-full px-6 py-3 text-sm font-medium text-blue-800">
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Contáctanos
+                    <form ref={form} onSubmit={handleSubmit} className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                        <label htmlFor="name" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                            <User className="w-4 h-4 mr-2" />
+                            Nombre Completo *
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
+                            placeholder="Tu Nombre Completo"
+                        />
+                        </div>
+                        <div className="space-y-2">
+                        <label htmlFor="email" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                            <Mail className="w-4 h-4 mr-2" />
+                            Correo Electrónico *
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
+                            placeholder="tu.email@ejemplo.com"
+                        />
+                        </div>
+                        <div className="space-y-2">
+                        <label htmlFor="country" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                            <Globe className="w-4 h-4 mr-2" />
+                            País
+                        </label>
+                        <input
+                            type="text"
+                            id="country"
+                            name="country"
+                            value={formData.country}
+                            onChange={handleInputChange}
+                            className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
+                            placeholder="País de Residencia"
+                        />
+                        </div>
+                        <div className="space-y-2">
+                        <label htmlFor="phone" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                            <Phone className="w-4 h-4 mr-2" />
+                            Teléfono
+                        </label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
+                            placeholder="Tu número de teléfono"
+                        />
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="message" className="flex items-center text-sm font-medium text-gray-700 mb-3">
+                        <MessageSquare className="w-4 h-4 mr-2" />
+                        Tu Mensaje *
+                        </label>
+                        <textarea
+                        id="message"
+                        name="message"
+                        required
+                        rows={6}
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none text-gray-900 placeholder-gray-500"
+                        placeholder="Cuéntanos sobre tu proyecto, tus objetivos y cómo podemos ayudarte a tener éxito..."
+                        />
+                    </div>
+
+                    <div className="text-center">
+                        <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-12 py-5 rounded-full text-lg font-bold hover:from-blue-700 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-3 mx-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                        {isSubmitting ? (
+                            <>
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            <span>Enviando...</span>
+                            </>
+                        ) : (
+                            <>
+                            <Send className="w-5 h-5" />
+                            <span>Enviar Mensaje</span>
+                            <ArrowRight className="w-5 h-5 animate-arrow" />
+                            </>
+                        )}
+                        </button>
+                        <p className="text-sm text-gray-500 mt-6">
+                        * Tu mensaje será enviado a nuestro correo electrónico y recibirás una confirmación.
+                        </p>
+                    </div>
+                    </form>
+                </div>
             </div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="text-gray-900">Hablemos de</span>
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">tu Próximo Proyecto</span>
-            </h1>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Estamos aquí para responder a tus preguntas, discutir tus ideas y ayudarte a encontrar la mejor solución tecnológica para tu negocio. ¡No dudes en contactarnos!
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            {contactInfo.map((info, index) => (
-              <div 
-                key={index} 
-                className="bg-white p-8 rounded-2xl text-center hover-lift card-hover animate-fade-in-up shadow-lg"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className={`w-20 h-20 bg-gradient-to-r ${info.color} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <info.icon className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{info.title}</h3>
-                <p className="text-lg text-blue-600 font-semibold mb-3">{info.details}</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{info.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-20 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="bg-white rounded-3xl p-8 md:p-12 animate-fade-in-up shadow-lg">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Envíanos <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">un Mensaje</span>
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Completa el formulario y uno de nuestros expertos se pondrá en contacto contigo a la brevedad.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="flex items-center text-sm font-medium text-gray-700 mb-3">
-                    <User className="w-4 h-4 mr-2" />
-                    Nombre Completo *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
-                    placeholder="Tu Nombre Completo"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="flex items-center text-sm font-medium text-gray-700 mb-3">
-                    <Mail className="w-4 h-4 mr-2" />
-                    Correo Electrónico *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
-                    placeholder="tu.email@ejemplo.com"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="country" className="flex items-center text-sm font-medium text-gray-700 mb-3">
-                    <Globe className="w-4 h-4 mr-2" />
-                    País *
-                  </label>
-                  <input
-                    type="text"
-                    id="country"
-                    name="country"
-                    required
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
-                    placeholder="País de Residencia"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="phone" className="flex items-center text-sm font-medium text-gray-700 mb-3">
-                    <Phone className="w-4 h-4 mr-2" />
-                    Teléfono *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
-                    placeholder="Tu número de teléfono"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="message" className="flex items-center text-sm font-medium text-gray-700 mb-3">
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  Tu Mensaje *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={6}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full px-6 py-4 bg-gray-100 border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none text-gray-900 placeholder-gray-500"
-                  placeholder="Cuéntanos sobre tu proyecto, tus objetivos y cómo podemos ayudarte a tener éxito..."
-                />
-              </div>
-
-              <div className="text-center">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-12 py-5 rounded-full text-lg font-bold hover:from-blue-700 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-3 mx-auto disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Enviando...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      <span>Enviar Mensaje</span>
-                      <ArrowRight className="w-5 h-5 animate-arrow" />
-                    </>
-                  )}
-                </button>
-                <p className="text-sm text-gray-500 mt-6">
-                  * Nos pondremos en contacto contigo en las próximas 24 horas.
-                </p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              ¿Por Qué <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">Elegirnos?</span>
-            </h3>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {benefits.map((benefit, index) => (
-              <div 
-                key={index} 
-                className="flex items-center space-x-4 bg-white p-6 rounded-xl animate-fade-in-up hover-lift shadow-lg"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <CheckCircle className="w-8 h-8 text-blue-500 flex-shrink-0" />
-                <span className="text-gray-800 font-medium">{benefit}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="bg-white rounded-3xl p-12 text-center animate-fade-in-up shadow-lg">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Nuestra <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">Disponibilidad</span>
-            </h3>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Estamos ubicados en el corazón de la innovación digital, pero nuestro alcance es global. Nos adaptamos a tus necesidades, ya sea en persona o de forma remota.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-gray-100 p-6 rounded-2xl">
-                <MapPin className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h4 className="text-gray-900 font-bold mb-2">Reuniones en Persona</h4>
-                <p className="text-gray-600 text-sm">Podemos coordinar reuniones en nuestras oficinas o en tu ubicación.</p>
-              </div>
-              <div className="bg-gray-100 p-6 rounded-2xl">
-                <Globe className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h4 className="text-gray-900 font-bold mb-2">Colaboración Remota</h4>
-                <p className="text-gray-600 text-sm">Trabajamos con clientes de todo el mundo a través de herramientas de colaboración.</p>
-              </div>
-              <div className="bg-gray-100 p-6 rounded-2xl">
-                <Users className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h4 className="text-gray-900 font-bold mb-2">Proyectos Internacionales</h4>
-                <p className="text-gray-600 text-sm">Tenemos experiencia en la gestión de proyectos a nivel internacional.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
     </div>
   );
 };

@@ -6,11 +6,11 @@ const WhatsAppButton = () => {
   return (
     <FloatingWhatsApp
       phoneNumber="+573245194228"
-      accountName={'whatsapp.accountName'}
+      accountName={'SoftDev Nexus'}
       avatar="/perfil_nuevo.png"
-      statusMessage={'whatsapp.statusMessage'}
-      chatMessage={'whatsapp.chatMessage'}
-      placeholder={'whatsapp.placeholder'}
+      statusMessage={'En línea'}
+      chatMessage={'¡Hola! ¿En qué podemos ayudarte?'}
+      placeholder={'Escribe un mensaje...'}
       allowEsc
       allowClickAway
       notification

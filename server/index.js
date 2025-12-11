@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const app = express();
 
-const allowedOrigins = ['https://softdevnexus.com', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174'];
+const allowedOrigins = ['https://softdevnexus.com', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174', 'https://5173-firebase-softdevnexus1-1764783228817.cluster-ks5pkkik3ncnmtf7l2z6gbh44i.cloudworkstations.dev'];
 
 const corsOptions = {
   origin: function (origin, callback) {

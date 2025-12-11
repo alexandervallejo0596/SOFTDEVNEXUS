@@ -18,9 +18,9 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <div class="min-h-screen bg-white">
+      <div className="min-h-screen bg-white">
         <Navigation />
-        <main class="pt-16">
+        <main className="pt-16">
           <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<Home />} />

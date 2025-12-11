@@ -2,36 +2,32 @@
 
 Este es el repositorio oficial del sitio web de SoftDev Nexus, una aplicación web moderna construida para mostrar los servicios, el portafolio y la información de contacto de la empresa. El sitio está diseñado para ser rápido, responsive y escalable.
 
-## ✨ Características Principales
+## Características Principales
 
 - **Stack Moderno**: Construido con React, TypeScript y Vite para un rendimiento y experiencia de desarrollo de primer nivel.
 - **Diseño Responsive**: Totalmente adaptado para una visualización perfecta en computadoras, tablets y dispositivos móviles.
 - **Rendimiento Optimizado**: Implementa técnicas avanzadas como carga asíncrona de CSS, caching del navegador y optimización de imágenes para tiempos de carga ultrarrápidos.
-- **Backend Integrado**: Utiliza un servidor Node.js con Express para gestionar el formulario de contacto de manera segura.
 - **Estilizado con Tailwind CSS**: Emplea un enfoque "utility-first" para un diseño rápido, consistente y personalizable.
+- **Formulario de Contacto con EmailJS**: El formulario envía notificaciones por correo electrónico y respuestas automáticas al cliente sin necesidad de un backend, gracias a la integración con EmailJS.
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 - **Frontend**: React 18, TypeScript, Vite, React Router.
-- **Backend**: Node.js, Express.js, Nodemailer.
 - **Estilos**: Tailwind CSS.
+- **Servicios de Correo**: EmailJS.
 - **Iconos**: Lucide React.
-- **Hosting**: Desplegado en un entorno de hosting compartido (cPanel) para el frontend y un servidor Node.js para el backend.
+- **Hosting**: Desplegado en un entorno de hosting compartido (cPanel).
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 .
 ├── dist/             # Archivos de producción del frontend (generados por `npm run build`)
 ├── public/           # Archivos estáticos (imágenes, favicons, etc.)
-├── server/           # Código fuente del servidor backend (Node.js/Express)
-│   ├── .env          # (¡No versionado!) Credenciales y variables de entorno
-│   ├── index.js      # Lógica principal del servidor
-│   └── package.json  # Dependencias del backend
 ├── src/              # Código fuente del frontend (React/TypeScript)
 │   ├── components/   # Componentes reutilizables de React
 │   ├── pages/        # Componentes que representan las páginas del sitio
@@ -45,7 +41,7 @@ Este es el repositorio oficial del sitio web de SoftDev Nexus, una aplicación w
 
 ---
 
-## 🚀 Instalación y Desarrollo Local
+## Instalación y Desarrollo Local
 
 Sigue estos pasos para levantar un entorno de desarrollo en tu máquina local.
 
@@ -78,51 +74,13 @@ npm install
 npm run dev
 ```
 
-### 3. Configurar el Backend
-
-El backend es necesario para que el formulario de contacto funcione. Abre una nueva terminal para este paso.
-
-```bash
-# Navegar al directorio del servidor
-cd server
-
-# Instalar dependencias del backend
-npm install
-```
-
-Crea un archivo `.env` dentro de la carpeta `server/` y añade las siguientes variables con tus credenciales de correo. **Este archivo es crucial y no debe ser compartido ni subido al repositorio.**
-
-```env
-# Credenciales del servidor de correo
-EMAIL_HOST=smtp.tudominio.com
-EMAIL_PORT=465
-EMAIL_SECURE=true
-EMAIL_USER=tu-correo@tudominio.com
-EMAIL_PASS=tu-contraseña
-
-# Puerto para el servidor backend
-PORT=3000
-```
-
-### 4. Ejecutar el Backend
-
-Una vez configurado el archivo `.env`, puedes iniciar el servidor de Node.js.
-
-```bash
-# Iniciar el servidor backend
-node index.js
-
-# O si tienes nodemon instalado para desarrollo
-nodemon index.js
-```
-
-¡Listo! Ahora tienes el frontend corriendo en `http://localhost:5173` y el backend en `http://localhost:3000`.
+¡Listo! Ahora tienes el frontend corriendo en `http://localhost:5173`.
 
 ---
 
-## 📦 Compilación y Despliegue (Producción)
+## Compilación y Despliegue (Producción)
 
-El despliegue consta de dos partes: subir los archivos estáticos del frontend al hosting y ejecutar el servidor backend.
+El despliegue consiste en subir los archivos estáticos del frontend a tu hosting cPanel.
 
 ### 1. Compilar el Frontend
 
@@ -132,25 +90,16 @@ Este comando crea la carpeta `dist/` con todos los archivos optimizados para pro
 npm run build
 ```
 
-### 2. Desplegar el Frontend en cPanel
+### 2. Desplegar en cPanel
 
 1.  Accede a tu cPanel y ve al **Administrador de Archivos**.
 2.  Navega a la carpeta `public_html`.
 3.  Sube y descomprime el contenido de la carpeta `dist/` dentro de `public_html`.
 4.  Sube el archivo `.htaccess` a la carpeta `public_html` para asegurar que el enrutamiento de React y las políticas de caché funcionen correctamente.
 
-### 3. Desplegar el Backend
-
-1.  Sube la carpeta `server/` completa a tu hosting, fuera de `public_html` (por ejemplo, en el directorio raíz del hosting).
-2.  Crea el archivo `server/.env` con las credenciales de producción.
-3.  Accede a tu terminal de hosting o a la herramienta "Setup Node.js App" en cPanel.
-4.  Configura una nueva aplicación de Node.js apuntando a la carpeta `server/` y al archivo de inicio `index.js`.
-5.  Instala las dependencias (`npm install`) desde la interfaz de cPanel o la terminal.
-6.  Inicia la aplicación. Asegúrate de que se reinicie automáticamente si se detiene (puedes usar `pm2` si tienes acceso a la terminal).
-
 ---
 
-## ⚡️ Optimización de Rendimiento
+## Optimización de Rendimiento
 
 Se han aplicado varias técnicas para maximizar el rendimiento del sitio:
 
@@ -161,6 +110,6 @@ Se han aplicado varias técnicas para maximizar el rendimiento del sitio:
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 © 2024 SoftDev Nexus. Todos los derechos reservados.
